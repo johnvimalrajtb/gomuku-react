@@ -7,10 +7,12 @@ import {
 } from 'react-router-dom'
 
 import HomePage from './components/home/HomePage'
+import HistoryPage from './components/history/HistoryPage'
 import AboutPage from './components/about/AboutPage'
 import NotFoundPage from './components/NotFoundPage'
 import LoginPage from './components/login/LoginPage'
 import GamesPage from './components/games/GamesPage'
+import GamesROPage from './components/games/GamesROPage'
 import TopBar from './components/layout/TopBar'
 import PrivateRoute from './components/router/PrivateRoute'
 import RouteWithProps from './components/router/RouteWithProps'
@@ -83,7 +85,10 @@ class App extends React.Component {
               <Route path='/about' component={AboutPage} />
               <RouteWithProps path='/login' component={LoginPage} props={{ login: this.login }} />
               <RouteWithProps path='/notloggedin' component={LoginPage} props={{ login: this.login }} />
-              <PrivateRoute path='/games' component={GamesPage} />
+              <PrivateRoute path='/game' component={GamesPage} />
+              <PrivateRoute path='/games' component={HistoryPage} />
+              <PrivateRoute path='/game-log/:id' component={GamesROPage} />
+
               <Route component={NotFoundPage} />
             </Switch>
           </div>

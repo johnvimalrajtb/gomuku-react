@@ -7,8 +7,7 @@ class GamesPage extends Component {
 
 render () {
   return (
-    
-      <Game />
+        <Game />
       )
 }
 

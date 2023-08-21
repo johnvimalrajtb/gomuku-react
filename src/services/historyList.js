@@ -48,7 +48,7 @@ export const addGameToPlaylist = (playlistId, gameId) => {
   return getHttp(`/playlists/${playlistId}`)
     .then(playlist => {
       const games = playlist.games
-      games.push(gameId)
+      .push(gameId)
       return patchHttp(`playlist`, { games: games })
     })
 }

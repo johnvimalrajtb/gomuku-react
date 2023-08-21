@@ -7,11 +7,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
 
-    // stone info: radius, diameter
-    this.stoneRadius = 25;
-    this.stoneDiameter = this.stoneRadius * 2;
-    //var this.state.currValue = -1; // player - O, computer - X
-    //var gameOver = false;
+    // initiate area
     var area = new Array(BOARD_SIZE);
     for (var i = 0; i < BOARD_SIZE; i++) {
       area[i] = new Array(BOARD_SIZE);
@@ -20,12 +16,11 @@ class Game extends React.Component {
       }
     }
     // game state
-    this.history = [];
     this.state = {
       blackStone: true,
       gameOver: false,
       gameState: "Next: Black Stone *",
-      currValue: -1, // player - O, computer - X
+      currValue: -1, // black - O, white - 1
       area: area,
       boardSize: BOARD_SIZE,
     };
@@ -34,6 +29,7 @@ class Game extends React.Component {
     this.init = this.init.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleNewGame = this.handleNewGame.bind(this);
+    this.handleLeaveGame = this.handleLeaveGame.bind(this);
   }
   /* eslint-disable */
   handleMouseDown(event) {
@@ -82,7 +78,7 @@ class Game extends React.Component {
         //gameOver = true;
         this.setState({
           gameOver: true,
-          gameState: "Status - Game Over!",
+          gameState: winState,
         });
         if (message != null) {
           message.innerHTML = "Status - Game Over";
@@ -131,34 +127,61 @@ class Game extends React.Component {
     //initiate area
 
     let reset = document.getElementById("newGame");
-    if (reset != null) reset.addEventListener("onClick", this.handleNewGame);
+    if (reset != null) reset.addEventListener("click", this.handleNewGame);
+
+    let leaveGame = document.getElementById("leaveGame");
+    if (leaveGame != null)
+      leaveGame.addEventListener("click", this.handleLeaveGame);
   }
 
-   handleNewGame(event) {
+  handleLeaveGame(event) {
+    if (this.state.gameOver) {
+        let historyData = {
+            gameId:  1,
+            winner: this.state.gameState,
+            date: new Date().toLocaleString(),
+            boardSize: this.state.boardSize,
+            area: this.state.area,
+          };
+          console.log(JSON.stringify([historyData]));
+      let history = localStorage.getItem("history");
+      if (history == null) {
+        localStorage.setItem("history", JSON.stringify([historyData]));
+      } else {
+        let items = Array.from(JSON.parse(history));
+        historyData.gameId = items.length + 1;
+        localStorage.setItem(
+          "history",
+          JSON.stringify(items.concat([historyData]))
+        );
+      }
+    }
+    window.location = "games";
+  }
+  handleNewGame(event) {
     var message = document.getElementById("message");
     var player = document.getElementById("player");
     //remove class from all cells
     let items = Array.from(document.querySelectorAll("[class$=White]"));
     items.map((cell) => {
-      if(cell != null ){
+      if (cell != null) {
         cell.className = "boardCell";
       }
     });
     items = Array.from(document.querySelectorAll("[class$=Black]"));
     items.map((cell) => {
-      if(cell != null ){
+      if (cell != null) {
         cell.className = "boardCell";
       }
     });
-    gameOver = false;
     if (player != null) {
       player.innerHTML = "Active Player: Black";
     }
     if (message != null) {
       message.innerHTML = "Status: New Game";
     }
+
     //initiate area
-    currValue = -1; // black  -1, white  1
     var area = new Array(this.state.boardSize);
     for (var i = 0; i < this.state.boardSize; i++) {
       area[i] = new Array(this.state.boardSize);
@@ -167,12 +190,12 @@ class Game extends React.Component {
       }
     }
     this.state = {
-        blackStone: true,
-        gameOver: false,
-        gameState: "Next: Black Stone *",
-        currValue : -1, // black  -1, white  1
-        area: area,
-      };
+      blackStone: true,
+      gameOver: false,
+      gameState: "Next: Black Stone *",
+      currValue: -1, // black  -1, white  1
+      area: area,
+    };
   }
   componentDidMount() {
     this.init();
@@ -182,7 +205,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <div className="goBoard" id="goBoard" width="700" height="700" />
+          <div className="goBoard" id="goBoard" />
         </div>
         <div className="messages">
           <div className="">
@@ -194,7 +217,18 @@ class Game extends React.Component {
             </div>
           </div>
         </div>
-        <button className="newGame" id="newGame">Reset Game</button>
+        <div className="flex-container">
+          <div>
+            <button className="newGame" id="newGame">
+              Reset Game
+            </button>
+          </div>
+          <div>
+            <button className="leaveGame" id="leaveGame">
+              Leave
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

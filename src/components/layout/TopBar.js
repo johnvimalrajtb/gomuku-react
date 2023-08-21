@@ -15,11 +15,11 @@ const TopBar = ({logout}, context) => (
         <Link className='pseudo button' to='/about'>About</Link>
         {
           context.auth.loggedIn &&
-        <Link className='pseudo button' to='/games'>Games</Link>
+        <Link className='pseudo button' to='/game'>Game</Link>
         }
         {
           context.auth.loggedIn &&
-          <Link className='pseudo button' to='/history'>Previous Game</Link>
+          <Link className='pseudo button' to='/games'>Previous Game</Link>
         }
         {
           !context.auth.loggedIn &&

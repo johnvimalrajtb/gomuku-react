@@ -3,7 +3,7 @@
 ### Routers
 - Home
 - Login
-- Games
+- Game
 - Previous Games[History]
 ### Features
 - A NxN grid-based Gomoku board game.
@@ -24,3 +24,6 @@
 
 ### Board size
 Board Size can be modified In the home page from the select form 5 -19
+
+### Login
+ Default user is `admin` and password is `admin`
