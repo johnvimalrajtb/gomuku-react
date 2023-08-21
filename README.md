@@ -26,4 +26,10 @@
 Board Size can be modified In the home page from the select form 5 -19
 
 ### Login
- Default user is `admin` and password is `admin`
+ The default user is `admin` and the password is `admin`
+
+Game
+
+![alt text](https://github.com/johnvimalrajtb/gomuku-react/blob/main/public/Game.png?raw=true)
+![alt text](https://github.com/johnvimalrajtb/gomuku-react/blob/main/public/Game-History.png?raw=true)
+![alt text](https://github.com/johnvimalrajtb/gomuku-react/blob/main/public/Previous-game-2.png?raw=true)

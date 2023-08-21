@@ -7,7 +7,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
      let boardSize = localStorage.getItem("boardSize"); 
-     alert (boardSize);
+     console.log(boardSize);
      if (boardSize == null) {
          boardSize = BOARD_SIZE;
         }
