@@ -6,12 +6,17 @@ import React from "react";
 class Game extends React.Component {
   constructor(props) {
     super(props);
-
+     let boardSize = localStorage.getItem("boardSize"); 
+     alert (boardSize);
+     if (boardSize == null) {
+         boardSize = BOARD_SIZE;
+        }
+     
     // initiate area
-    var area = new Array(BOARD_SIZE);
-    for (var i = 0; i < BOARD_SIZE; i++) {
-      area[i] = new Array(BOARD_SIZE);
-      for (var j = 0; j < BOARD_SIZE; j++) {
+    var area = new Array(boardSize);
+    for (var i = 0; i < boardSize; i++) {
+      area[i] = new Array(boardSize);
+      for (var j = 0; j < boardSize; j++) {
         area[i][j] = 0;
       }
     }
@@ -22,7 +27,7 @@ class Game extends React.Component {
       gameState: "Next: Black Stone *",
       currValue: -1, // black - O, white - 1
       area: area,
-      boardSize: BOARD_SIZE,
+      boardSize: boardSize,
     };
 
     // functions
